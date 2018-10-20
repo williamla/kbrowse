@@ -1,0 +1,31 @@
+version: "2"
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - 9092:9092
+    volumes:
+      - ./seed-kafka.sh:/seed-kafka.sh
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181/local
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_CREATE_TOPICS: "wills:2:1,kbrowse:3:1"
+    command:
+      - /seed-kafka.sh
+
+  kbrowse:
+    build: .
+    ports:
+      - 4000:4000
+    volumes:
+      - ./config/docker.yml:/app/default.yml
+    depends_on:
+      - zookeeper
+      - kafka
+    restart: always

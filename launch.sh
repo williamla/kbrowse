@@ -11,4 +11,6 @@ export APP_ROOT='/app'
 mkdir -p config && cp ${CONFIG_FILE} ${APP_ROOT}/config/default.yml
 
 export cmd=java\ -jar\ "${APP_ROOT}"/kbrowse-*-SNAPSHOT-standalone.jar\ server
+echo '*** wait for it ***'
+sleep 25; # simplified delay for zk and kafka services to be ready
 $cmd
