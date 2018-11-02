@@ -59,6 +59,11 @@ docker run -p 4000:4000 kbrowse
 docker run -p 4000:4000 -v $PWD/config/custom.yml:/app/default.yml kbrowse
 ```
 
+Docker Compose:
+```
+# Run local zk, kafka, and kbrowse
+docker-compose down; docker-compose up
+```
 # Tests
 ```
 # Requires npm!
